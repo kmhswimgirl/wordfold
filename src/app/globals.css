@@ -9,7 +9,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #ffffff;
     --foreground: #ededed;
   }
 }
@@ -18,4 +18,95 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  place-items: center;
+  height: 100vh;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.board-row {
+  padding: 1px 1px 1px 1px;
+}
+
+.board {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  font: bold 36px Arial;
+  margin: 3px;
+  text-decoration: none;
+  background-color: #999898;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  /* border-top: 1px solid #CCCCCC; */
+  /* border-right: 1px solid #333333; */
+ /* border-bottom: 1px solid #333333; */
+ /* border-left: 1px solid #CCCCCC; */
+  border-radius: 20px; 
+}
+
+.selected {
+  background-color: #444;
+  color: #eee;
+}
+
+.empty {
+  background-color: black;
+}
+
+.correct {
+  background-color: #070;
+  color: #eee;
+}
+
+.button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+
+.button-container {
+  display: flex;
+}
+
+.score {
+  color:#171717;
+  position: absolute;
+  left: 550px;
+  top: 10px;
+}
+
+.numMoves {
+  color:#171717;
+  position: absolute;
+  left: 550px;
+  top: 50px;
+}
+
+.arrow-key {
+  color:#333333;
+  background-color: black;
+  padding: 2px 6px 2px 6px;
+  margin: 10px;
+}
+
+.controls {
+  position: absolute;
+  left: 550px;
+  top: 100px;
 }
