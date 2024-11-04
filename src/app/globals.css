@@ -47,11 +47,8 @@ body {
   background-color: #999898;
   color: #333333;
   padding: 2px 6px 2px 6px;
-  /* border-top: 1px solid #CCCCCC; */
-  /* border-right: 1px solid #333333; */
- /* border-bottom: 1px solid #333333; */
- /* border-left: 1px solid #CCCCCC; */
   border-radius: 20px; 
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .selected {
@@ -60,7 +57,7 @@ body {
 }
 
 .empty {
-  background-color: black;
+  background-color: rgb(255, 255, 255);
 }
 
 .correct {
@@ -84,29 +81,39 @@ body {
   display: flex;
 }
 
-.score {
-  color:#171717;
-  position: absolute;
-  left: 550px;
-  top: 10px;
-}
 
-.numMoves {
+.scoreRow {
+  align-content: center;
+  width: 250px;
+  height: 100px;
   color:#171717;
-  position: absolute;
-  left: 550px;
-  top: 50px;
+  background-color: #CCCCCC;
+  border-radius: 20px;
+  margin-bottom: 80px;
+  padding-left: 50px; /* centers moves and score text */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .arrow-key {
+  width: 100px;
+  height: 50px;
   color:#333333;
-  background-color: black;
+  background-color: rgb(228, 131, 210);
   padding: 2px 6px 2px 6px;
   margin: 10px;
+  border-radius: 20px; 
+  font-size: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .controls {
-  position: absolute;
-  left: 550px;
-  top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.keypadRow{
+  display: flex;
+  justify-content: center;
+  width:100%;
 }
