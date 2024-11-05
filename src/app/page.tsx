@@ -48,11 +48,23 @@ export default function Home() {
     }
     return null; // Return null if no square is selected
   }
-  function displaySquareContents(){
+
+  function mergeUp(){
     getSelectedSquare();
     console.log(selectedContent);
   }
-  
+  function mergeDown(){
+    getSelectedSquare();
+    console.log(selectedContent);
+  }
+  function mergeLeft(){
+    getSelectedSquare();
+    console.log(selectedContent);
+  }
+  function mergeRight(){
+    getSelectedSquare();
+    console.log(selectedContent);
+  }
 
  //HTML that renders the board, controls, and move/score counters
   return (
@@ -104,22 +116,28 @@ export default function Home() {
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => {displaySquareContents()}}> ⇧ </button>
+          <button className = "arrow-key" onClick ={() => {mergeUp()}}> ⇧ </button>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => null}> ⇦ </button>
-          <button className = "arrow-key" onClick ={() => null }> ⇨ </button>
+          <button className = "arrow-key" onClick ={() => mergeLeft()}> ⇦ </button>
+          <button className = "arrow-key" onClick ={() => mergeRight()}> ⇨ </button>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => null}> ⇩ </button>
+          <button className = "arrow-key" onClick ={() => mergeDown()}> ⇩ </button>
         </div>
 
         <button className = "reset"> Reset </button>
         <button className = "checkSol"> Solution </button>
-
       </div>
+
+      <div className ="config">
+        <button className = "config1"> Puzzle 1 </button>
+        <button className = "config2"> Puzzle 2 </button>
+        <button className = "config3"> Puzzle 3 </button>
+      </div>
+
     </div>
   )
 }
