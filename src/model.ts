@@ -53,29 +53,8 @@ export class Model {
     contents(row:number, column:number) {
         return this.board.letters[row][column]
     }
-}
 
-export class ArrowKeys {
-    mergeRow: number;
-    mergeColumn: number;
-    model: Model;
-
-    constructor(model: Model, finalRow:number = 0, finalColumn: number = 0){
-        this.model = model;
-        this.mergeRow = finalRow;
-        this.mergeColumn = finalColumn;
-    }
-
-    mergeUp(){
-        
-    }
-    mergeRight(){
-        
-    }
-    mergeLeft(){
-        
-    }
-    mergeDown(){
-
+    setContents(row: number, column: number, newContents: string) {
+        this.board.letters[row][column] = newContents;
     }
 }
