@@ -8,8 +8,7 @@ export default function Home() {
   const [model, setModel] = React.useState(new Model(0))
   const [redraw, forceRedraw] = React.useState(0) //force refeshing the display
   const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values
-  const selectedSquare = getSelectedSquare();
-  const selectedContent = selectedSquare ? model.contents(selectedSquare.row, selectedSquare.column) : null; //returns the contents of the selected square, if not returns null
+  const selectedSquare = getSelectedSquare(); //returns the coordinate of the selected square
 
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
@@ -24,7 +23,8 @@ export default function Home() {
       newState[row][column] = true; //replaces the current state of the selected square with true
       sqSetIsClicked(newState); //updates the state of the entire array (i.e. gameboard)
       andRefreshDisplay(); //refreshes display
-    } 
+    }
+
   }
 
   function css(row:number, column:number) { // change the style for the given square based on model. Space separated string.
@@ -32,7 +32,8 @@ export default function Home() {
     if (sqIsClicked[row][column]) { // this is what changes the class of a the square
       return "square selected" //when square is selected
     }else if(content.length === 0){ //autochecks for empty squares and reassigns class if ' ' is found
-      return "square empty" //when square is empty
+      return "empty" //when square is empty
+
     }
     return "square"; //normal unselected square
   }
@@ -47,6 +48,8 @@ export default function Home() {
     }
     return null; // Return null if no square is selected
   }
+
+  //comments to refactor the merge directions into a single method (switch:case) for readability
   /* 
   function mergeSquare (direction:string){
     if(selectedSquare != null){ //selected square must be a valid square and not be empty
@@ -66,14 +69,25 @@ export default function Home() {
         }
       break;
       case: "left"
+        if(selectedSquare != null && selectedSquare.column != 0){
+          //get both contents from the square to be merged and the one being merged
+          const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(selectedSquare.row , selectedSquare.column -1);
 
+          //merge the contents of the selected an new square and then update the board
+      
+          model.setContents(selectedSquare.row, selectedSquare.column - 1, newContent);
+          model.setContents(selectedSquare.row, selectedSquare.column, '');
+          andRefreshDisplay(); //refreshes display, 
+        }else{
+          alert("You cannot merge there!");
+        }
       break;
     }
   }
   */ 
 
   function mergeUp(){
-    if(selectedSquare != null && selectedSquare.row != 0){
+    if(selectedSquare != null && selectedSquare.row != 0){ //conditions for merging up
       //get both contents from the square to be merged and the one being merged
       const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents((selectedSquare.row - 1), selectedSquare.column);
 
@@ -88,22 +102,48 @@ export default function Home() {
   }
 
   function mergeDown(){
-    if(selectedSquare != null && selectedSquare.row != 4){
-      const mergeDownMath = selectedSquare.column + 1;
+    if(selectedSquare != null && selectedSquare.row != 4){ //conditions for merging down
+      //get both contents from the square to be merged and the one being merged
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents((selectedSquare.row + 1), selectedSquare.column);
 
+      //merge the contents of the selected an new square and then update the board
+      
+      model.setContents((selectedSquare.row + 1), selectedSquare.column, newContent);
+      model.setContents(selectedSquare.row, selectedSquare.column, '');
+      andRefreshDisplay(); //refreshes display, 
     }else{
       alert("You cannot merge there!");
     }
   }
 
-  function mergeLeft(){
-    getSelectedSquare();
-    console.log(selectedContent);
+  function mergeLeft(){ 
+    if(selectedSquare != null && selectedSquare.column != 0){ //conditions for merging left
+      //get both contents from the square to be merged and the one being merged
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(selectedSquare.row , selectedSquare.column -1);
+
+      //merge the contents of the selected an new square and then update the board
+      
+      model.setContents(selectedSquare.row, selectedSquare.column - 1, newContent);
+      model.setContents(selectedSquare.row, selectedSquare.column, '');
+      andRefreshDisplay(); //refreshes display, 
+    }else{
+      alert("You cannot merge there!");
+    }
   }
 
   function mergeRight(){
-    getSelectedSquare();
-    console.log(selectedContent);
+    if(selectedSquare != null && selectedSquare.column != 4){ //conditions for merging right
+      //get both contents from the square to be merged and the one being merged
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(selectedSquare.row , selectedSquare.column + 1);
+
+      //merge the contents of the selected an new square and then update the board
+      
+      model.setContents(selectedSquare.row, selectedSquare.column + 1, newContent);
+      model.setContents(selectedSquare.row, selectedSquare.column, '');
+      andRefreshDisplay(); //refreshes display, 
+    }else{
+      alert("You cannot merge there!");
+    }
   }
 
  //HTML that renders the board, controls, and move/score counters
