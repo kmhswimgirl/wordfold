@@ -8,18 +8,16 @@ export default function Home() {
   // constants 
   const [model, setModel] = React.useState(new Model(0))
   const [redraw, forceRedraw] = React.useState(0) //force refeshing the display
-  const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>( //resulting structure is a 5x5 2D array of booleans linked to isClicked that are initially set to false
-   Array(5).fill(null).map(() => Array(5).fill(false)) // initializes the array to have all bool:false values
-  );
-  const [keyIsClicked, keySetIsClicked] = React.useState(0);
+  const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values
+  const selectedSquare = getSelectedSquare();
+  const selectedContent = selectedSquare ? model.contents(selectedSquare.row, selectedSquare.column) : null; //returns the contents of the selected square
 
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
     forceRedraw(redraw + 1)
   }
 
-  function handleSqClick(row:number, column:number) {
-    //model.board.letters[row][column] += "!"  // HACK! Just to show something (later want to combine strings from selected button)
+  function handleSqClick(row:number, column:number) { //handles selecting a single square
     const content = model.contents(row, column);
     const newState = Array(5).fill(null).map(() => Array(5).fill(false)); //updates map of true/false values when isClicked is called
 
@@ -28,21 +26,33 @@ export default function Home() {
       sqSetIsClicked(newState); //updates the state of the entire array (i.e. gameboard)
       andRefreshDisplay(); //refreshes display
     } 
-
   }
 
-  // change the style for the given square based on model. Space separated string.
-  function css(row:number, column:number) {
+  function css(row:number, column:number) { // change the style for the given square based on model. Space separated string.
     const content = model.contents(row, column); //returns the content of the selected square
-
     if (sqIsClicked[row][column]) { // this is what changes the class of a the square
       return "square selected" //when square is selected
-
     }else if(content.length === 0){ //checks for empty squares and changes class even when no button is being clicked
       return "square empty" //when square is empty
     }
     return "square"; //normal unselected square
   }
+
+  function getSelectedSquare() {
+    for (let row = 0; row < sqIsClicked.length; row++) {
+      for (let column = 0; column < sqIsClicked[row].length; column++) {
+        if (sqIsClicked[row][column]) {
+          return { row, column };
+        }
+      }
+    }
+    return null; // Return null if no square is selected
+  }
+  function displaySquareContents(){
+    getSelectedSquare();
+    console.log(selectedContent);
+  }
+  
 
  //HTML that renders the board, controls, and move/score counters
   return (
@@ -89,30 +99,27 @@ export default function Home() {
       <div className = "controls">
 
         <div className = "scoreRow">
-          <div className="score">{"Score: " + "GOES HERE"}</div>
-          <div className="numMoves">{"Moves: " + "GOES HERE"}</div>
+          <div className="score">Score:  + GOES HERE</div>
+          <div className="numMoves">Moves: + "GOES HERE"</div>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key"> ⇧ </button>
+          <button className = "arrow-key" onClick ={() => {displaySquareContents()}}> ⇧ </button>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key"> ⇦ </button>
-          <button className = "arrow-key"> ⇨ </button>
+          <button className = "arrow-key" onClick ={() => null}> ⇦ </button>
+          <button className = "arrow-key" onClick ={() => null }> ⇨ </button>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key"> ⇩ </button>
+          <button className = "arrow-key" onClick ={() => null}> ⇩ </button>
         </div>
 
-        <div className ="functionButton">
-          <button className = "reset"> Reset </button>
-          <button className = "checkSol"> Check Solution </button>
-        </div>
+        <button className = "reset"> Reset </button>
+        <button className = "checkSol"> Solution </button>
 
       </div>
-
     </div>
   )
 }

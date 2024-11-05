@@ -26,13 +26,12 @@ export class Board {
 
         this.selectedSquare = undefined
     }
-
 }
 
 export class Model {
     words : string[]
     board : Board
-    readonly configs = [ config1, config2, config3]
+    readonly configs = [config1, config2, config3]
     chosen : number
 
     /** which is zero-based. */
@@ -54,5 +53,29 @@ export class Model {
     contents(row:number, column:number) {
         return this.board.letters[row][column]
     }
+}
 
+export class ArrowKeys {
+    mergeRow: number;
+    mergeColumn: number;
+    model: Model;
+
+    constructor(model: Model, finalRow:number = 0, finalColumn: number = 0){
+        this.model = model;
+        this.mergeRow = finalRow;
+        this.mergeColumn = finalColumn;
+    }
+
+    mergeUp(){
+        
+    }
+    mergeRight(){
+        
+    }
+    mergeLeft(){
+        
+    }
+    mergeDown(){
+
+    }
 }
