@@ -26,13 +26,12 @@ export class Board {
 
         this.selectedSquare = undefined
     }
-
 }
 
 export class Model {
     words : string[]
     board : Board
-    readonly configs = [ config1, config2, config3]
+    readonly configs = [config1, config2, config3]
     chosen : number
 
     /** which is zero-based. */
@@ -55,4 +54,7 @@ export class Model {
         return this.board.letters[row][column]
     }
 
+    setContents(row: number, column: number, newContents: string) {
+        this.board.letters[row][column] = newContents;
+    }
 }
