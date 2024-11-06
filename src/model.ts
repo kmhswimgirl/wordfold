@@ -33,9 +33,13 @@ export class Model {
     board : Board
     readonly configs = [config1, config2, config3]
     chosen : number
+    moveCount : number
+    score : number
 
     /** which is zero-based. */
     constructor(which:number) {
+        this.moveCount = 0
+        this.score = 0;
         this.chosen = which
         let puzzle =  this.configs[this.chosen]
         let board = new Board()
@@ -56,6 +60,10 @@ export class Model {
 
     setContents(row: number, column: number, newContents: string) {
         this.board.letters[row][column] = newContents;
+    }
+
+    updateMoves(){
+        this.moveCount++;
     }
 
 }
