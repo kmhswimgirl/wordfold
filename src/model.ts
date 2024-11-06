@@ -57,4 +57,5 @@ export class Model {
     setContents(row: number, column: number, newContents: string) {
         this.board.letters[row][column] = newContents;
     }
+
 }

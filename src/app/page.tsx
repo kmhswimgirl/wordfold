@@ -2,10 +2,13 @@
 import React from 'react'
 import { Model } from '../model'
 import { config1 } from '@/puzzle'
+import{ config2 } from '@/puzzle'
+import{ config3 } from '@/puzzle'
 
 export default function Home() {
+
   // constants 
-  const [model, setModel] = React.useState(new Model(0))
+  const [model, setModel] = React.useState(new Model(0)); //sets initial Puzzle configuration 
   const [redraw, forceRedraw] = React.useState(0) //force refeshing the display
   const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values
   const selectedSquare = getSelectedSquare(); //returns the coordinate of the selected square
@@ -15,30 +18,30 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  function handleSqClick(row:number, column:number) { //handles selecting a single square
+  //handles selecting a single square
+  function handleSqClick(row:number, column:number) { 
     const content = model.contents(row, column);
     const newState = Array(5).fill(null).map(() => Array(5).fill(false)); //updates map of true/false values when isClicked is called
 
-    if(content.length > 0){//condition to check if square is available to be selected (non-empty square)
+    if(content.length > 0 && content.length < 6){//condition to check if square is available to be selected (non-empty square, non full square)
       newState[row][column] = true; //replaces the current state of the selected square with true
       sqSetIsClicked(newState); //updates the state of the entire array (i.e. gameboard)
       andRefreshDisplay(); //refreshes display
     }
-
   }
-
-  function css(row:number, column:number) { // change the style for the given square based on model. Space separated string.
+  
+  // change the style for the given square based on model. Space separated string.
+  function css(row:number, column:number) { 
     const content = model.contents(row, column); //returns the content of the selected square
     if (sqIsClicked[row][column]) { // this is what changes the class of a the square
       return "square selected" //when square is selected
     }else if(content.length === 0){ //autochecks for empty squares and reassigns class if ' ' is found
-      return "empty" //when square is empty
-
+      return "square empty" //when square is empty
     }
     return "square"; //normal unselected square
   }
-
-  function getSelectedSquare() { //returns selected square row and column
+  //returns selected square row and column
+  function getSelectedSquare() { 
     for (let row = 0; row < sqIsClicked.length; row++) {
       for (let column = 0; column < sqIsClicked[row].length; column++) {
         if (sqIsClicked[row][column]) {
@@ -49,43 +52,7 @@ export default function Home() {
     return null; // Return null if no square is selected
   }
 
-  //comments to refactor the merge directions into a single method (switch:case) for readability
-  /* 
-  function mergeSquare (direction:string){
-    if(selectedSquare != null){ //selected square must be a valid square and not be empty
-    switch(direction)
-      case: "up"
-        if(selectedSquare.row != 0){
-          //get both contents from the square to be merged and the one being merged
-          const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents((selectedSquare.row - 1), selectedSquare.column);
-
-          //merge the contents of the selected an new square and then update the board
-      
-          model.setContents((selectedSquare.row - 1), selectedSquare.column, newContent);
-          model.setContents(selectedSquare.row, selectedSquare.column, '');
-          andRefreshDisplay();
-        }else{
-          alert("You cannot merge there!");
-        }
-      break;
-      case: "left"
-        if(selectedSquare != null && selectedSquare.column != 0){
-          //get both contents from the square to be merged and the one being merged
-          const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(selectedSquare.row , selectedSquare.column -1);
-
-          //merge the contents of the selected an new square and then update the board
-      
-          model.setContents(selectedSquare.row, selectedSquare.column - 1, newContent);
-          model.setContents(selectedSquare.row, selectedSquare.column, '');
-          andRefreshDisplay(); //refreshes display, 
-        }else{
-          alert("You cannot merge there!");
-        }
-      break;
-    }
-  }
-  */ 
-
+  // merge functions for arrowkeys (name should be handleMerge)
   function mergeUp(){
     if(selectedSquare != null && selectedSquare.row != 0){ //conditions for merging up
       //get both contents from the square to be merged and the one being merged
@@ -146,10 +113,18 @@ export default function Home() {
     }
   }
 
- //HTML that renders the board, controls, and move/score counters
+  // change the configuration of the puzzle
+  function changePuzzle(which:number){
+    const newPuzzle = new Model (which);
+    setModel(newPuzzle);
+
+    andRefreshDisplay();
+  }
+
+ //HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
-      <h1>WordFold: {config1.theme}</h1>
+      <h1>WordFold</h1>
       <div className="board"> 
         <div className="button-container">
           <button data-testid="0,0" className={css(0,0)} onClick={() => handleSqClick(0, 0)}>{model.contents(0,0)}</button>
@@ -210,6 +185,13 @@ export default function Home() {
 
         <button className = "reset"> Reset </button>
         <button className = "checkSol"> Solution </button>
+
+        <div className = "change-config">
+          <button className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>
+          <button className = "config" onClick ={() => changePuzzle(1)}>Puzzle 2</button>
+          <button className = "config" onClick ={() => changePuzzle(2)}>Puzzle 3</button>
+        </div>
+
       </div>
 
     </div>
