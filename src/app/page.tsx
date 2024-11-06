@@ -12,7 +12,7 @@ export default function Home() {
   const [redraw, forceRedraw] = React.useState(0) //force refeshing the display
   const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values
   const selectedSquare = getSelectedSquare(); //returns the coordinate of the selected square
-
+  
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
     forceRedraw(redraw + 1)
@@ -39,6 +39,7 @@ export default function Home() {
     }
     return "square"; //normal unselected square
   }
+
   //returns selected square row and column
   function getSelectedSquare() { 
     for (let row = 0; row < sqIsClicked.length; row++) {
@@ -51,7 +52,7 @@ export default function Home() {
     return null; // Return null if no square is selected
   }
 
-  // merge functions for arrowkeys (name should be handleMerge)
+  // merge functions for arrowkeys eventually... (name should be handleMerge)
   function mergeUp(){
     if(selectedSquare != null && selectedSquare.row != 0){ //conditions for merging up
       //get both contents from the square to be merged and the one being merged
@@ -62,6 +63,7 @@ export default function Home() {
       model.setContents((selectedSquare.row - 1), selectedSquare.column, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
       css(selectedSquare.row, selectedSquare.column);
+      model.updateMoves();
       andRefreshDisplay();
     }else{
       alert("You cannot merge there!");
@@ -77,6 +79,7 @@ export default function Home() {
       
       model.setContents((selectedSquare.row + 1), selectedSquare.column, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+      model.updateMoves();
       andRefreshDisplay(); //refreshes display, 
     }else{
       alert("You cannot merge there!");
@@ -92,6 +95,7 @@ export default function Home() {
       
       model.setContents(selectedSquare.row, selectedSquare.column - 1, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+      model.updateMoves();
       andRefreshDisplay(); //refreshes display, 
     }else{
       alert("You cannot merge there!");
@@ -107,6 +111,7 @@ export default function Home() {
       
       model.setContents(selectedSquare.row, selectedSquare.column + 1, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+      model.updateMoves();
       andRefreshDisplay(); //refreshes display, 
     }else{
       alert("You cannot merge there!");
@@ -120,11 +125,13 @@ export default function Home() {
     andRefreshDisplay();
   }
 
-  function resetBoard(){ //resets the board
+  //resets the board when "reset" button is clicked
+  function resetBoard(){
     const currPuzzle = new Model(model.chosen);
     setModel(currPuzzle);
     andRefreshDisplay();
   }
+
  //HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
@@ -170,8 +177,8 @@ export default function Home() {
       <div className = "controls">
 
         <div className = "scoreRow">
-          <div className="score">Score:  + GOES HERE</div>
-          <div className="numMoves">Moves: + "GOES HERE"</div>
+          <div className="score">Score:  </div>
+          <div className="numMoves">Moves: {model.moveCount}</div>
         </div>
 
         <div className = "keypadRow">
