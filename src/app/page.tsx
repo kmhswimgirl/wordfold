@@ -2,11 +2,13 @@
 import React from 'react'
 import { Model } from '../model'
 import { config1 } from '@/puzzle'
+import{ config2 } from '@/puzzle'
+import{ config3 } from '@/puzzle'
 
 export default function Home() {
 
   // constants 
-  const [model, setModel] = React.useState(new Model(0))
+  const [model, setModel] = React.useState(new Model(0)); //sets initial Puzzle configuration 
   const [redraw, forceRedraw] = React.useState(0) //force refeshing the display
   const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values
   const selectedSquare = getSelectedSquare(); //returns the coordinate of the selected square
@@ -27,6 +29,7 @@ export default function Home() {
       andRefreshDisplay(); //refreshes display
     }
   }
+  
   // change the style for the given square based on model. Space separated string.
   function css(row:number, column:number) { 
     const content = model.contents(row, column); //returns the content of the selected square
@@ -49,7 +52,7 @@ export default function Home() {
     return null; // Return null if no square is selected
   }
 
-  // merge functions for arrowkeys
+  // merge functions for arrowkeys (name should be handleMerge)
   function mergeUp(){
     if(selectedSquare != null && selectedSquare.row != 0){ //conditions for merging up
       //get both contents from the square to be merged and the one being merged
@@ -111,11 +114,17 @@ export default function Home() {
   }
 
   // change the configuration of the puzzle
+  function changePuzzle(which:number){
+    const newPuzzle = new Model (which);
+    setModel(newPuzzle);
 
- //HTML that renders the board, controls, and move/score counters
+    andRefreshDisplay();
+  }
+
+ //HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
-      <h1>WordFold: {config1.theme}</h1>
+      <h1>WordFold</h1>
       <div className="board"> 
         <div className="button-container">
           <button data-testid="0,0" className={css(0,0)} onClick={() => handleSqClick(0, 0)}>{model.contents(0,0)}</button>
@@ -178,9 +187,9 @@ export default function Home() {
         <button className = "checkSol"> Solution </button>
 
         <div className = "change-config">
-          <button className = "config" onClick ={() => setModel(0)}>Puzzle 1</button>
-          <button className = "config">Puzzle 2</button>
-          <button className = "config">Puzzle 3</button>
+          <button className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>
+          <button className = "config" onClick ={() => changePuzzle(1)}>Puzzle 2</button>
+          <button className = "config" onClick ={() => changePuzzle(2)}>Puzzle 3</button>
         </div>
 
       </div>

@@ -58,7 +58,4 @@ export class Model {
         this.board.letters[row][column] = newContents;
     }
 
-    getTheme(which:number){
-        
-    }
 }
