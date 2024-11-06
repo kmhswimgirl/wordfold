@@ -36,7 +36,7 @@ export default function Home() {
       return "square selected" //when square is selected
     }else if(content.length === 0){ //autochecks for empty squares and reassigns class if ' ' is found
       return "square empty" //when square is empty
-    }
+    } 
     return "square"; //normal unselected square
   }
 
@@ -52,18 +52,34 @@ export default function Home() {
     return null; // Return null if no square is selected
   }
 
+  //unselect the square
+ function unselectSq(row:number, column:number){
+    const newState = sqIsClicked.map(inner => inner.slice()); // Create a copy of the current state
+    newState[row][column] = false; // Set the specific square to false
+    sqSetIsClicked(newState); // Update the state with the new array
+    andRefreshDisplay(); // Refresh the display
+ }
+
   // merge functions for arrowkeys eventually... (name should be handleMerge)
   function mergeUp(){
     if(selectedSquare != null && selectedSquare.row != 0){ //conditions for merging up
       //get both contents from the square to be merged and the one being merged
-      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents((selectedSquare.row - 1), selectedSquare.column);
+      const newSqRow = selectedSquare.row - 1;
+      const newSqColumn = selectedSquare.column;
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(newSqRow, newSqColumn);
+      const newSqClass = css(newSqRow, newSqColumn);
 
       //merge the contents of the selected an new square and then update the board
+      if(newSqClass === "square empty"){
+        alert("You cannot merge there!");
+        return;
+      }
 
-      model.setContents((selectedSquare.row - 1), selectedSquare.column, newContent);
+      model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
-      css(selectedSquare.row, selectedSquare.column);
+      //css(selectedSquare.row, selectedSquare.column) == "square empty"
       model.updateMoves();
+      unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay();
     }else{
       alert("You cannot merge there!");
@@ -73,13 +89,22 @@ export default function Home() {
   function mergeDown(){
     if(selectedSquare != null && selectedSquare.row != 4){ //conditions for merging down
       //get both contents from the square to be merged and the one being merged
-      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents((selectedSquare.row + 1), selectedSquare.column);
+      const newSqRow = selectedSquare.row + 1;
+      const newSqColumn = selectedSquare.column;
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(newSqRow, newSqColumn);
+      const newSqClass = css(newSqRow, newSqColumn);
 
+      // check that the new square is not empty
+      if(newSqClass === "square empty"){
+        alert("You cannot merge there!");
+        return;
+      }
       //merge the contents of the selected an new square and then update the board
       
-      model.setContents((selectedSquare.row + 1), selectedSquare.column, newContent);
+      model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
       model.updateMoves();
+      unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display, 
     }else{
       alert("You cannot merge there!");
@@ -89,14 +114,23 @@ export default function Home() {
   function mergeLeft(){ 
     if(selectedSquare != null && selectedSquare.column != 0){ //conditions for merging left
       //get both contents from the square to be merged and the one being merged
-      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(selectedSquare.row , selectedSquare.column -1);
+      const newSqRow = selectedSquare.row;
+      const newSqColumn = selectedSquare.column - 1;
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(newSqRow, newSqColumn);
+      const newSqClass = css(newSqRow, newSqColumn);
 
+      // check that the new square is not empty
+      if(newSqClass === "square empty"){
+        alert("You cannot merge there!");
+        return;
+      }
       //merge the contents of the selected an new square and then update the board
       
-      model.setContents(selectedSquare.row, selectedSquare.column - 1, newContent);
+      model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
       model.updateMoves();
-      andRefreshDisplay(); //refreshes display, 
+      unselectSq(selectedSquare.row, selectedSquare.column);
+      andRefreshDisplay(); //refreshes display,
     }else{
       alert("You cannot merge there!");
     }
@@ -105,14 +139,23 @@ export default function Home() {
   function mergeRight(){
     if(selectedSquare != null && selectedSquare.column != 4){ //conditions for merging right
       //get both contents from the square to be merged and the one being merged
-      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(selectedSquare.row , selectedSquare.column + 1);
+      const newSqRow = selectedSquare.row;
+      const newSqColumn = selectedSquare.column + 1;
+      const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents(newSqRow, newSqColumn);
+      const newSqClass = css(newSqRow, newSqColumn);
 
+      // check that the new square is not empty
+      if(newSqClass === "square empty"){
+        alert("You cannot merge there!");
+        return;
+      }
       //merge the contents of the selected an new square and then update the board
       
-      model.setContents(selectedSquare.row, selectedSquare.column + 1, newContent);
+      model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
       model.updateMoves();
-      andRefreshDisplay(); //refreshes display, 
+      unselectSq(selectedSquare.row, selectedSquare.column);
+      andRefreshDisplay(); //refreshes display,
     }else{
       alert("You cannot merge there!");
     }
@@ -135,7 +178,7 @@ export default function Home() {
  //HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
-      <h1>WordFold</h1>
+      <h1>WordFold!</h1>
       <div className="board"> 
         <div className="button-container">
           <button data-testid="0,0" className={css(0,0)} onClick={() => handleSqClick(0, 0)}>{model.contents(0,0)}</button>
@@ -196,6 +239,7 @@ export default function Home() {
 
         <button className = "reset"  onClick ={() => resetBoard()}> Reset </button>
         <button className = "checkSol"> Solution </button>
+        <button className = "showSol"> Show Solution </button>
 
         <div className = "change-config">
           <button className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>
