@@ -22,14 +22,13 @@ export default function Home() {
   function handleSqClick(row:number, column:number) { 
     const content = model.contents(row, column);
     const newState = Array(5).fill(null).map(() => Array(5).fill(false)); //updates map of true/false values when isClicked is called
-
     if(content.length > 0 && content.length < 6){//condition to check if square is available to be selected (non-empty square, non full square)
       newState[row][column] = true; //replaces the current state of the selected square with true
       sqSetIsClicked(newState); //updates the state of the entire array (i.e. gameboard)
       andRefreshDisplay(); //refreshes display
     }
   }
-  
+
   // change the style for the given square based on model. Space separated string.
   function css(row:number, column:number) { 
     const content = model.contents(row, column); //returns the content of the selected square
@@ -59,9 +58,10 @@ export default function Home() {
       const newContent = model.contents(selectedSquare.row, selectedSquare.column) + model.contents((selectedSquare.row - 1), selectedSquare.column);
 
       //merge the contents of the selected an new square and then update the board
-      
+
       model.setContents((selectedSquare.row - 1), selectedSquare.column, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+      css(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay();
     }else{
       alert("You cannot merge there!");
@@ -117,10 +117,14 @@ export default function Home() {
   function changePuzzle(which:number){
     const newPuzzle = new Model (which);
     setModel(newPuzzle);
-
     andRefreshDisplay();
   }
 
+  function resetBoard(){ //resets the board
+    const currPuzzle = new Model(model.chosen);
+    setModel(currPuzzle);
+    andRefreshDisplay();
+  }
  //HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
@@ -171,7 +175,7 @@ export default function Home() {
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => {mergeUp()}}> ⇧ </button>
+          <button className = "arrow-key" onClick ={() => mergeUp()}> ⇧ </button>
         </div>
 
         <div className = "keypadRow">
@@ -183,7 +187,7 @@ export default function Home() {
           <button className = "arrow-key" onClick ={() => mergeDown()}> ⇩ </button>
         </div>
 
-        <button className = "reset"> Reset </button>
+        <button className = "reset"  onClick ={() => resetBoard()}> Reset </button>
         <button className = "checkSol"> Solution </button>
 
         <div className = "change-config">
