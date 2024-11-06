@@ -163,6 +163,12 @@ export default function Home() {
 
   // change the configuration of the puzzle
   function changePuzzle(which:number){
+    if(selectedSquare != null){
+      unselectSq(selectedSquare.row, selectedSquare.column);
+      const newPuzzle = new Model (which);
+      setModel(newPuzzle);
+      andRefreshDisplay();
+    }
     const newPuzzle = new Model (which);
     setModel(newPuzzle);
     andRefreshDisplay();
@@ -170,6 +176,12 @@ export default function Home() {
 
   //resets the board when "reset" button is clicked
   function resetBoard(){
+    if(selectedSquare != null){
+      unselectSq(selectedSquare.row, selectedSquare.column);
+      const currPuzzle = new Model(model.chosen);
+      setModel(currPuzzle);
+      andRefreshDisplay();
+    }
     const currPuzzle = new Model(model.chosen);
     setModel(currPuzzle);
     andRefreshDisplay();
