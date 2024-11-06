@@ -66,4 +66,8 @@ export class Model {
         this.moveCount++;
     }
 
+    updateScore(){
+        this.score++;
+    }
+
 }
