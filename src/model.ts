@@ -1,7 +1,7 @@
 
 import { config1, config2, config3 } from './puzzle'
 
-export class Coordinate {
+export class Coordinate { 
     readonly row : number
     readonly column : number
 
@@ -11,7 +11,7 @@ export class Coordinate {
     }
 }
 
-export class Board {
+export class Board { //realized this exists AFTER basically re-creating and implementing a function in page.tsx (Sorry!)
     letters : string[][]
     selectedSquare : Coordinate | undefined
 
@@ -28,7 +28,7 @@ export class Board {
     }
 }
 
-export class Model {
+export class Model { 
     words : string[]
     board : Board
     readonly configs = [config1, config2, config3]
@@ -66,8 +66,33 @@ export class Model {
         this.moveCount++;
     }
 
-    updateScore(){
-        this.score++;
+    checkSol(){
+        switch(this.chosen){
+            case 0:
+                if(this.contents(0,2) === config1.words[1] && this.contents(1,4) === "CYAN" && this.contents(2,3) === "PURPLE" && this.contents(2,4) === "MAUVE" && this.contents(3,0) === "BLUE"){
+                    return true;
+                }else{
+                    return false;
+                }
+            break;
+            case 1:
+                if(this.contents(1,0) === "CHERRY" && this.contents(1,2) === "BANANA" && this.contents(1,3) === "PAPAYA" && this.contents(3,4) === "PEAR" && this.contents(4,1) === "FIG"){
+                    return true;
+                }else{
+                    return false;
+                }
+            break;
+            case 2:
+                if(this.contents(0,0) === "SNAKE" && this.contents(1,4) === "TAPIR" && this.contents(2,2) === "WOLF" && this.contents(3,1) === "EAGLE" && this.contents(3,3) === "JAGUAR"){
+                    return true;
+                }else{
+                    return false;
+                }
+            break;
+        }
     }
+}
 
+export class Alerts{
+    
 }

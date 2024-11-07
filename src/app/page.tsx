@@ -8,17 +8,17 @@ import{ config3 } from '@/puzzle'
 export default function Home() {
 
   // constants 
-  const [model, setModel] = React.useState(new Model(0)); //sets initial Puzzle configuration 
-  const [redraw, forceRedraw] = React.useState(0) //force refeshing the display
-  const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values
-  const selectedSquare = getSelectedSquare(); //returns the coordinate of the selected square
+  const [model, setModel] = React.useState(new Model(0)); // sets initial Puzzle configuration 
+  const [redraw, forceRedraw] = React.useState(0) // force refeshing the display
+  const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values (NOTE: I totally forgot that Model class existed when i wrote this)
+  const selectedSquare = getSelectedSquare(); // returns the coordinate of the selected square
   
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
     forceRedraw(redraw + 1)
   }
 
-  //handles selecting a single square
+  // handles selecting a single square
   function handleSqClick(row:number, column:number) { 
     const content = model.contents(row, column);
     const newState = Array(5).fill(null).map(() => Array(5).fill(false)); //updates map of true/false values when isClicked is called
@@ -31,17 +31,17 @@ export default function Home() {
 
   // change the style for the given square based on model. Space separated string.
   function css(row:number, column:number) { 
-    const content = model.contents(row, column); //returns the content of the selected square
+    const content = model.contents(row, column); // returns the content of the selected square
     if (sqIsClicked[row][column]) { // this is what changes the class of a the square
-      return "square selected" //when square is selected
-    }else if(content.length === 0){ //autochecks for empty squares and reassigns class if ' ' is found
-      return "square empty" //when square is empty
+      return "square selected" // when square is selected
+    }else if(content.length === 0){ // autochecks for empty squares and reassigns class if ' ' is found
+      return "square empty" // when square is empty
     } 
-    return "square"; //normal unselected square
+    return "square"; // normal unselected square
   }
 
-  //returns selected square row and column
-  function getSelectedSquare() { 
+  // returns selected square row and column
+  function getSelectedSquare() {  //not sure why I did not look at Model.ts before making this... but it does work!
     for (let row = 0; row < sqIsClicked.length; row++) {
       for (let column = 0; column < sqIsClicked[row].length; column++) {
         if (sqIsClicked[row][column]) {
@@ -52,7 +52,7 @@ export default function Home() {
     return null; // Return null if no square is selected
   }
 
-  //unselect the square
+  // unselect the square
   function unselectSq(row:number, column:number){
     const newState = sqIsClicked.map(inner => inner.slice()); // Create a copy of the current state
     newState[row][column] = false; // Set the specific square to false
@@ -161,6 +161,15 @@ export default function Home() {
     }
   }
 
+  // handles the "Check Answer" button by calling model.checkSol()
+  function handleCheckSol(){
+    if(model.checkSol()){
+      alert("you solved the puzzle!");
+    }else{
+      alert("sorry, this solution is incorrect");
+    }
+  }
+
   // change the configuration of the puzzle
   function changePuzzle(which:number){
     if(selectedSquare != null){
@@ -174,7 +183,7 @@ export default function Home() {
     andRefreshDisplay();
   }
 
-  //resets the board when "reset" button is clicked
+  // resets the board when "reset" button is clicked
   function resetBoard(){
     if(selectedSquare != null){
       unselectSq(selectedSquare.row, selectedSquare.column);
@@ -187,7 +196,7 @@ export default function Home() {
     andRefreshDisplay();
   }
 
- //HTML that renders the board, controls, and move/score counters etc.
+ // HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
       <h1>WordFold!</h1>
@@ -250,7 +259,7 @@ export default function Home() {
         </div>
 
         <button className = "reset"  onClick ={() => resetBoard()}> Reset </button>
-        <button className = "checkSol"> Solution </button>
+        <button className = "checkSol" onClick ={() => handleCheckSol()}> Check Answer </button>
         <button className = "showSol"> Show Solution </button>
 
         <div className = "change-config">
