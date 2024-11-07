@@ -53,12 +53,12 @@ export default function Home() {
   }
 
   //unselect the square
- function unselectSq(row:number, column:number){
+  function unselectSq(row:number, column:number){
     const newState = sqIsClicked.map(inner => inner.slice()); // Create a copy of the current state
     newState[row][column] = false; // Set the specific square to false
     sqSetIsClicked(newState); // Update the state with the new array
     andRefreshDisplay(); // Refresh the display
- }
+  }
 
   // merge functions for arrowkeys eventually... (name should be handleMerge)
   function mergeUp(){
