@@ -34,12 +34,12 @@ export class Model {
     readonly configs = [config1, config2, config3]
     chosen : number
     moveCount : number
-    score : number
+    currScore : number
 
     /** which is zero-based. */
     constructor(which:number) {
         this.moveCount = 0
-        this.score = 0;
+        this.currScore = 0;
         this.chosen = which
         let puzzle =  this.configs[this.chosen]
         let board = new Board()
@@ -66,6 +66,22 @@ export class Model {
         this.moveCount++;
     }
 
+    updateScore(){
+        for (let row = 0; row < 5; row++) {
+            for (let column = 0; column < 5; column++) {
+            }
+        }
+    }
+    
+    /* NOTES:
+        **  look through all squares on the board using a for loop and see if any (return type: bool) match substrings for the 
+            solution words for that configuration method.
+        **  after that, a return true takes the length of the string and converts it into points by using the =+ operator.
+        ** reCalcScore() is called after each merge happens
+        ** should always be initialized as zero before recalculating to avoid adding together 
+        **
+    */
+
     checkSol(){
         switch(this.chosen){
             case 0:
@@ -91,8 +107,4 @@ export class Model {
             break;
         }
     }
-}
-
-export class Alerts{
-    
 }

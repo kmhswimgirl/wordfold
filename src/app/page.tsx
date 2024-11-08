@@ -6,7 +6,6 @@ import{ config2 } from '@/puzzle'
 import{ config3 } from '@/puzzle'
 
 export default function Home() {
-
   // constants 
   const [model, setModel] = React.useState(new Model(0)); // sets initial Puzzle configuration 
   const [redraw, forceRedraw] = React.useState(0) // force refeshing the display
@@ -36,7 +35,7 @@ export default function Home() {
       return "square selected" // when square is selected
     }else if(content.length === 0){ // autochecks for empty squares and reassigns class if ' ' is found
       return "square empty" // when square is empty
-    } 
+    }
     return "square"; // normal unselected square
   }
 
@@ -169,6 +168,7 @@ export default function Home() {
       alert("sorry, this solution is incorrect");
     }
   }
+
 
   // change the configuration of the puzzle
   function changePuzzle(which:number){
