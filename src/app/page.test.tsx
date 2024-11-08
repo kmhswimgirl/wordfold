@@ -14,6 +14,9 @@ test('Home', async () => {
   const b00 = getByTestId('0,0')
   expect(b00.textContent).toBe("E")
 
+  const b01 = getByTestId('0,1')
+  expect(b01.textContent).toBe("L")
+
   cleanup()
 })
 

@@ -76,8 +76,11 @@ export default function Home() {
 
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
-      //css(selectedSquare.row, selectedSquare.column) == "square empty"
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay();
     }else{
@@ -99,10 +102,14 @@ export default function Home() {
         return;
       }
       //merge the contents of the selected an new square and then update the board
-      
+      //model.resetScore();
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display, 
     }else{
@@ -127,7 +134,11 @@ export default function Home() {
       
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display,
     }else{
@@ -152,7 +163,11 @@ export default function Home() {
       
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+      
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display,
     }else{
@@ -241,7 +256,7 @@ export default function Home() {
       <div className = "controls">
 
         <div className = "scoreRow">
-          <div className="score">Score:  </div>
+          <div className="score">Score: {model.currScore}  </div>
           <div className="numMoves">Moves: {model.moveCount}</div>
         </div>
 
