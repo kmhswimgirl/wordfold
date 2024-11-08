@@ -6,7 +6,6 @@ import{ config2 } from '@/puzzle'
 import{ config3 } from '@/puzzle'
 
 export default function Home() {
-
   // constants 
   const [model, setModel] = React.useState(new Model(0)); // sets initial Puzzle configuration 
   const [redraw, forceRedraw] = React.useState(0) // force refeshing the display
@@ -36,7 +35,7 @@ export default function Home() {
       return "square selected" // when square is selected
     }else if(content.length === 0){ // autochecks for empty squares and reassigns class if ' ' is found
       return "square empty" // when square is empty
-    } 
+    }
     return "square"; // normal unselected square
   }
 
@@ -77,8 +76,11 @@ export default function Home() {
 
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
-      //css(selectedSquare.row, selectedSquare.column) == "square empty"
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay();
     }else{
@@ -100,10 +102,14 @@ export default function Home() {
         return;
       }
       //merge the contents of the selected an new square and then update the board
-      
+      //model.resetScore();
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display, 
     }else{
@@ -128,7 +134,11 @@ export default function Home() {
       
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display,
     }else{
@@ -153,7 +163,11 @@ export default function Home() {
       
       model.setContents(newSqRow, newSqColumn, newContent);
       model.setContents(selectedSquare.row, selectedSquare.column, '');
+
       model.updateMoves();
+      model.resetScore();
+      model.addToScore();
+      
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display,
     }else{
@@ -169,6 +183,7 @@ export default function Home() {
       alert("sorry, this solution is incorrect");
     }
   }
+
 
   // change the configuration of the puzzle
   function changePuzzle(which:number){
@@ -241,7 +256,7 @@ export default function Home() {
       <div className = "controls">
 
         <div className = "scoreRow">
-          <div className="score">Score:  </div>
+          <div className="score">Score: {model.currScore}  </div>
           <div className="numMoves">Moves: {model.moveCount}</div>
         </div>
 

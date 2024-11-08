@@ -34,12 +34,12 @@ export class Model {
     readonly configs = [config1, config2, config3]
     chosen : number
     moveCount : number
-    score : number
+    currScore : number
 
     /** which is zero-based. */
     constructor(which:number) {
-        this.moveCount = 0
-        this.score = 0;
+        this.moveCount = 0;
+        this.currScore = 0;
         this.chosen = which
         let puzzle =  this.configs[this.chosen]
         let board = new Board()
@@ -64,6 +64,23 @@ export class Model {
 
     updateMoves(){
         this.moveCount++;
+    }
+
+    addToScore(){
+        for (let row = 0; row < 5; row++) {
+            for (let column = 0; column < 5; column++) {
+                if (this.words[0].includes(this.contents(row, column)) || this.words[1].includes(this.contents(row, column)) || this.words[2].includes(this.contents(row, column)) || this.words[3].includes(this.contents(row, column))) {
+                    if(this.contents(row, column).length >= 2){
+                        this.currScore += this.contents(row, column).length;
+                    }
+                }
+            }
+        }
+        return this.currScore;
+    }
+
+    resetScore(){
+        this.currScore = 0;
     }
 
     checkSol(){
@@ -91,8 +108,5 @@ export class Model {
             break;
         }
     }
-}
 
-export class Alerts{
-    
 }
