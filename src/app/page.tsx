@@ -78,8 +78,9 @@ export default function Home() {
       model.setContents(selectedSquare.row, selectedSquare.column, '');
 
       model.updateMoves();
-      model.resetScore();
+      model.resetCounters();
       model.addToScore();
+      model.countEmptySq();
 
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay();
@@ -107,8 +108,9 @@ export default function Home() {
       model.setContents(selectedSquare.row, selectedSquare.column, '');
 
       model.updateMoves();
-      model.resetScore();
+      model.resetCounters();
       model.addToScore();
+      model.countEmptySq();
 
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display, 
@@ -136,7 +138,8 @@ export default function Home() {
       model.setContents(selectedSquare.row, selectedSquare.column, '');
 
       model.updateMoves();
-      model.resetScore();
+      model.resetCounters();
+      model.countEmptySq();
       model.addToScore();
 
       unselectSq(selectedSquare.row, selectedSquare.column);
@@ -165,8 +168,9 @@ export default function Home() {
       model.setContents(selectedSquare.row, selectedSquare.column, '');
 
       model.updateMoves();
-      model.resetScore();
+      model.resetCounters();
       model.addToScore();
+      model.countEmptySq();
       
       unselectSq(selectedSquare.row, selectedSquare.column);
       andRefreshDisplay(); //refreshes display,
@@ -179,11 +183,12 @@ export default function Home() {
   function handleCheckSol(){
     if(model.checkSol()){
       alert("you solved the puzzle!");
+    }else if(model.numEmptySq < 20){
+      alert("You cannot check solution yet");
     }else{
       alert("sorry, this solution is incorrect");
     }
   }
-
 
   // change the configuration of the puzzle
   function changePuzzle(which:number){
@@ -275,7 +280,7 @@ export default function Home() {
 
         <button className = "reset"  onClick ={() => resetBoard()}> Reset </button>
         <button className = "checkSol" onClick ={() => handleCheckSol()}> Check Answer </button>
-        <button className = "showSol"> Show Solution </button>
+        <button className = "showSol" onClick ={() => model.displaySol()}> Show Solution </button>
 
         <div className = "change-config">
           <button className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>

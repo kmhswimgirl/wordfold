@@ -35,12 +35,14 @@ export class Model {
     chosen : number
     moveCount : number
     currScore : number
+    numEmptySq : number
 
     /** which is zero-based. */
     constructor(which:number) {
         this.moveCount = 0;
         this.currScore = 0;
         this.chosen = which
+        this.numEmptySq = 0;
         let puzzle =  this.configs[this.chosen]
         let board = new Board()
         this.words = []
@@ -79,9 +81,22 @@ export class Model {
         return this.currScore;
     }
 
-    resetScore(){
-        this.currScore = 0;
+    countEmptySq(){
+        for (let row = 0; row < 5; row++) {
+            for (let column = 0; column < 5; column++) {
+                if (this.contents(row,column).length === 0) {
+                    this.numEmptySq++;
+                }
+            }
+        }
+        return this.numEmptySq;
     }
+
+    resetCounters(){
+        this.currScore = 0;
+        this.numEmptySq = 0;
+    }
+
 
     checkSol(){
         switch(this.chosen){
@@ -105,6 +120,20 @@ export class Model {
                 }else{
                     return false;
                 }
+            break;
+        }
+    }
+
+    displaySol(){
+        switch(this.chosen){
+            case 0: // displays solution for Colors Puzzle
+            alert("YELLOW CYAN PURPLE MAUVE BLUE")
+            break;
+            case 1: // displays solution for Animals Puzzle
+            alert("TAPIR EAGLE JAGUAR SNAKE WOLF")
+            break;
+            case 2: // displays solution for Fruit Puzzle
+            alert("BANANA PEAR FIG PAPAYA CHERRY")
             break;
         }
     }
