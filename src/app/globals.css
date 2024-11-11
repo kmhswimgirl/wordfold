@@ -22,6 +22,12 @@ body {
   height: 100vh;
 }
 
+h1 {
+  color:#333333;
+  font-size: 60px;
+  margin-left: 30px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -35,23 +41,20 @@ body {
 .board {
   position: absolute;
   left: 20px;
-  top: 10px;
+  top: 70px;
 }
 
 .square {
   width: 100px;
   height: 100px;
-  font: bold 36px Arial;
+  font: bold 20px Arial;
   margin: 3px;
   text-decoration: none;
   background-color: #999898;
   color: #333333;
   padding: 2px 6px 2px 6px;
-  /* border-top: 1px solid #CCCCCC; */
-  /* border-right: 1px solid #333333; */
- /* border-bottom: 1px solid #333333; */
- /* border-left: 1px solid #CCCCCC; */
   border-radius: 20px; 
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .selected {
@@ -60,7 +63,8 @@ body {
 }
 
 .empty {
-  background-color: black;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
 }
 
 .correct {
@@ -68,45 +72,85 @@ body {
   color: #eee;
 }
 
-.button {
-  font: bold 11px Arial;
-  text-decoration: none;
-  background-color: #EEEEEE;
-  color: #333333;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-}
-
 .button-container {
   display: flex;
 }
 
-.score {
-  color:#171717;
-  position: absolute;
-  left: 550px;
-  top: 10px;
-}
-
-.numMoves {
-  color:#171717;
-  position: absolute;
-  left: 550px;
-  top: 50px;
-}
-
 .arrow-key {
+  width: 100px;
+  height: 50px;
   color:#333333;
-  background-color: black;
+  background-color: rgb(228, 131, 210);
   padding: 2px 6px 2px 6px;
   margin: 10px;
+  border-radius: 20px; 
+  font-size: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .controls {
   position: absolute;
-  left: 550px;
-  top: 100px;
+  left: 600px;
+  top: 50;
+  width: 250px;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.keypadRow{
+  display: flex;
+  justify-content: center;
+}
+
+.reset{
+  background-color:darkred;
+  border-radius: 20px;
+  font-size: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 200px;
+}
+
+.checkSol {
+  background-color:rgb(73, 163, 82);
+  color:#171717;
+  border-radius: 20px;
+  font-size: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 200px;
+}
+
+.showSol {
+  background-color:rgb(82, 135, 240);
+  border-radius: 20px;
+  font-size: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 200px;
+}
+
+.config{
+  width:100px;
+  background-color: rgb(226, 111, 236);
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: 20px;
+  display: flex; /* Enable flexbox layout */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically (optional) */
+}
+
+.scoreRow{
+  background-color: rgb(167, 210, 248);
+  color: #171717;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  text-align: center; /* Center text horizontally */
+}
+
+.functions{
+  display: grid;
+  gap: 10px; /* Add space between the buttons */
+  padding: 20px;
 }
