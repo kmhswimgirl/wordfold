@@ -69,7 +69,7 @@ export default function Home() {
       const newSqClass = css(newSqRow, newSqColumn);
 
       //merge the contents of the selected an new square and then update the board
-      if(newSqClass === "square empty"){
+      if(newSqClass === "square empty" || model.contents(newSqRow, newSqColumn).length + model.contents(selectedSquare.row, selectedSquare.column).length > 6){
         alert("You cannot merge there!");
         return;
       }
@@ -98,7 +98,7 @@ export default function Home() {
       const newSqClass = css(newSqRow, newSqColumn);
 
       // check that the new square is not empty
-      if(newSqClass === "square empty"){
+      if(newSqClass === "square empty" || model.contents(newSqRow, newSqColumn).length + model.contents(selectedSquare.row, selectedSquare.column).length > 6){
         alert("You cannot merge there!");
         return;
       }
@@ -128,7 +128,7 @@ export default function Home() {
       const newSqClass = css(newSqRow, newSqColumn);
 
       // check that the new square is not empty
-      if(newSqClass === "square empty"){
+      if(newSqClass === "square empty" || model.contents(newSqRow, newSqColumn).length + model.contents(selectedSquare.row, selectedSquare.column).length > 6){
         alert("You cannot merge there!");
         return;
       }
@@ -158,7 +158,7 @@ export default function Home() {
       const newSqClass = css(newSqRow, newSqColumn);
 
       // check that the new square is not empty
-      if(newSqClass === "square empty"){
+      if(newSqClass === "square empty" || model.contents(newSqRow, newSqColumn).length + model.contents(selectedSquare.row, selectedSquare.column).length > 6){
         alert("You cannot merge there!");
         return;
       }

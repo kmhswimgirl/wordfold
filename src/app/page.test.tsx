@@ -14,12 +14,16 @@ test('Home', async () => {
   const b11 = getByTestId("1,1");
   const b01 = getByTestId("0,1");
   const mergeUp = getByTestId("upKey");
+  const mergeDown = getByTestId("downKey");
+  const mergeRight = getByTestId("rightKey");
+  const mergeLeft = getByTestId("leftKey");
+  const score = getByTestId("score");
 
   expect(b00.textContent).toBe("E") //testing intital configuration upon site launch
   expect(b11.textContent).toBe("L")
   expect(b01.textContent).toBe("L")
 
-  fireEvent.click(b11) //testing merge up on config 1
+  fireEvent.click(b11) //testing merge up (config 1)
   fireEvent.click(mergeUp)
   expect(b01.textContent).toBe("LL")
 
@@ -32,9 +36,25 @@ test('Home', async () => {
   fireEvent.click(getByTestId("puzzle3")) //test switching to config 3
   expect(b00.textContent).toBe("H")
 
-  
-  
+  fireEvent.click(b01) //testing merge down 
+  fireEvent.click(mergeDown)
+  expect(b11.textContent).toBe("CR")
 
+  fireEvent.click(getByTestId("reset")) //reset board
+
+  fireEvent.click(b00) //testing merge right
+  fireEvent.click(mergeRight);
+  expect(b01.textContent).toBe("HC")
+
+  fireEvent.click(getByTestId("reset")) //reset board
+
+  fireEvent.click(b01) //testing merge left
+  fireEvent.click(mergeLeft);
+  expect(b00.textContent).toBe("CH")
+
+  fireEvent.click(getByTestId("reset")) //reset board
+  
+  fireEvent.click(getByTestId("showSol")) //click the show solution button
 
   cleanup()
 })
