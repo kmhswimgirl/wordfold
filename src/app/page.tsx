@@ -11,6 +11,7 @@ export default function Home() {
   const [redraw, forceRedraw] = React.useState(0) // force refeshing the display
   const [sqIsClicked, sqSetIsClicked] = React.useState<boolean[][]>(Array(5).fill(null).map(() => Array(5).fill(false))); // initializes the array to have all bool:false values (NOTE: I totally forgot that Model class existed when i wrote this)
   const selectedSquare = getSelectedSquare(); // returns the coordinate of the selected square
+  const themes = [config1.theme, config2.theme, config3.theme]
   
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
@@ -219,7 +220,7 @@ export default function Home() {
  // HTML that renders the board, controls, and move/score counters etc.
   return (
     <div>
-      <h1>WordFold!</h1>
+      <h1>WordFold: {themes[model.chosen]}</h1>
       <div className="board"> 
         <div className="button-container">
           <button data-testid="0,0" className={css(0,0)} onClick={() => handleSqClick(0, 0)}>{model.contents(0,0)}</button>
@@ -278,9 +279,11 @@ export default function Home() {
           <button className = "arrow-key" onClick ={() => mergeDown()}> ⇩ </button>
         </div>
 
+        <div className = "functions">
         <button className = "reset"  onClick ={() => resetBoard()}> Reset </button>
         <button className = "checkSol" onClick ={() => handleCheckSol()}> Check Answer </button>
         <button className = "showSol" onClick ={() => model.displaySol()}> Show Solution </button>
+        </div>
 
         <div className = "change-config">
           <button className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>
