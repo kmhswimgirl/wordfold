@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "I Hate Soft Eng",
-  description: "Death to Typescript",
+  title: "WordFold",
+  description: "A fun word game!",
 };
 
 export default function RootLayout({

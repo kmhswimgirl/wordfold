@@ -1,9 +1,8 @@
 'use client'                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react'
 import { Model } from '../model'
-import { config1 } from '@/puzzle'
-import{ config2 } from '@/puzzle'
-import{ config3 } from '@/puzzle'
+import { config1, config2, config3 } from '../puzzle'
+
 
 export default function Home() {
   // constants 
@@ -262,33 +261,33 @@ export default function Home() {
       <div className = "controls">
 
         <div className = "scoreRow">
-          <div className="score">Score: {model.currScore}  </div>
-          <div className="numMoves">Moves: {model.moveCount}</div>
+          <div data-testid="score" className="score">Score: {model.currScore}  </div>
+          <div data-testid="moves" className="numMoves">Moves: {model.moveCount}</div>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => mergeUp()}> ⇧ </button>
+          <button data-testid="upKey" className = "arrow-key" onClick ={() => mergeUp()}> ⇧ </button>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => mergeLeft()}> ⇦ </button>
-          <button className = "arrow-key" onClick ={() => mergeRight()}> ⇨ </button>
+          <button data-testid="leftKey" className = "arrow-key" onClick ={() => mergeLeft()}> ⇦ </button>
+          <button data-testid="rightKey" className = "arrow-key" onClick ={() => mergeRight()}> ⇨ </button>
         </div>
 
         <div className = "keypadRow">
-          <button className = "arrow-key" onClick ={() => mergeDown()}> ⇩ </button>
+          <button data-testid="downKey" className = "arrow-key" onClick ={() => mergeDown()}> ⇩ </button>
         </div>
 
         <div className = "functions">
-        <button className = "reset"  onClick ={() => resetBoard()}> Reset </button>
-        <button className = "checkSol" onClick ={() => handleCheckSol()}> Check Answer </button>
-        <button className = "showSol" onClick ={() => model.displaySol()}> Show Solution </button>
+        <button data-testid="reset" className = "reset"  onClick ={() => resetBoard()}> Reset </button>
+        <button data-testid="checkSol" className = "checkSol" onClick ={() => handleCheckSol()}> Check Answer </button>
+        <button data-testid="showSol" className = "showSol" onClick ={() => model.displaySol()}> Show Solution </button>
         </div>
 
         <div className = "change-config">
-          <button className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>
-          <button className = "config" onClick ={() => changePuzzle(1)}>Puzzle 2</button>
-          <button className = "config" onClick ={() => changePuzzle(2)}>Puzzle 3</button>
+          <button data-testid="puzzle1" className = "config" onClick ={() => changePuzzle(0)}>Puzzle 1</button>
+          <button data-testid="puzzle2" className = "config" onClick ={() => changePuzzle(1)}>Puzzle 2</button>
+          <button data-testid="puzzle3" className = "config" onClick ={() => changePuzzle(2)}>Puzzle 3</button>
         </div>
 
       </div>
