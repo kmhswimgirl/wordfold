@@ -1,9 +1,13 @@
-Hello and welcome to WordFold!
+<h1>Welcome to WordFold!</h1>
 
-I am unsure if I accidentally installed anything weird/out of the ordinary so i included the package.json file in my IP.2 submission just to be safe.
+WordFold is a word game that is coded in Typescript using Next.js as a framework. The objective of the game is to create words by "folding" the letters into each other.
 
-Sometimes testing for coverage (npm run test -- --coverage) includes more files than it should, which skews the all files test case coverage. I included a screenshot of running my test cases when the correct files were included.
+To begin, choose a configuration using the puzzle buttons and select a square on the board. Next, click one of the four arrow buttons to merge the selected contents in that direction. The selected contents will always be placed in front of the contents of the square that is being merged into. 
 
-<img width="1023" alt="Screenshot 2024-11-11 at 12 25 12" src="https://github.com/user-attachments/assets/10f16d58-37ff-4a16-bb9e-b7eb1149fc30">
+<img width="898" alt="Screenshot 2024-11-12 at 11 10 52" src="https://github.com/user-attachments/assets/0e13b98c-e1fe-4ebe-a778-cf0441508244">
 
-Best, Kylie H.
+Scoring is based on correct moves. Each time a move is made, the score will update. It is the sum of all letters involved in correct moves.
+
+<img width="1006" alt="Screenshot 2024-11-12 at 11 11 14" src="https://github.com/user-attachments/assets/3d174e03-82f8-43b4-9bf5-cdeac9a18173">
+
+** This project is not hosted yet on GitHub pages, but will be soon :)
