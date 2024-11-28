@@ -71,7 +71,7 @@ export class Model {
     addToScore(){
         for (let row = 0; row < 5; row++) {
             for (let column = 0; column < 5; column++) {
-                if (this.words[0].includes(this.contents(row, column)) || this.words[1].includes(this.contents(row, column)) || this.words[2].includes(this.contents(row, column)) || this.words[3].includes(this.contents(row, column))) {
+                if (this.words[0].includes(this.contents(row, column)) || this.words[1].includes(this.contents(row, column)) || this.words[2].includes(this.contents(row, column)) || this.words[3].includes(this.contents(row, column))||this.words[4].includes(this.contents(row, column))) {
                     if(this.contents(row, column).length >= 2){
                         this.currScore += this.contents(row, column).length;
                     }
